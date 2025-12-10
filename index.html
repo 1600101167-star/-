@@ -1,1 +1,119 @@
-<!DOCTYPE html> <html lang="zh"> <head> <meta charset="UTF-8"> <title>暗恋测试</title> <style> body { font-family: Arial, sans-serif; background: #f8f8f8; margin: 0; padding: 20px; } .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1); } h2 { text-align: center; } .question { font-size: 18px; margin-top: 20px; font-weight: bold; } .btn { width: 100%; background: #4a90e2; color: white; border: none; padding: 10px; font-size: 16px; border-radius: 8px; margin-top: 10px; cursor: pointer; } .btn:hover { background: #357abd; } #result { font-size: 20px; margin-top: 30px; text-align: center; font-weight: bold; color: #e74c3c; } </style> </head> <body> <div class="container"> <h2>暗恋测试：TA是否喜欢你？</h2> <div id="questions"></div> <div id="result"></div> </div> <script> const questions = [ "1. TA会主动找你聊天吗？", "2. TA看到你时会微笑吗？", "3. TA会主动帮你吗？", "4. TA对别人和对你态度不一样吗？", "5. TA愿意花时间陪你吗？", "6. TA会记住你的小细节吗？", "7. TA对你有耐心吗？", "8. TA会主动问你最近怎么样吗？", "9. TA愿意和你分享他的事情吗？", "10. TA见到你会紧张或害羞吗？" ]; let score = 0; let index = 0; function showQuestion() { if (index < questions.length) { document.getElementById("questions").innerHTML = ` <div class="question">${questions[index]}</div> <button class="btn" onclick="answer(1)"> 是的 </button> <button class="btn" onclick="answer(0)"> 不是 </button> `; } else { showResult(); } } function answer(value) { score += value; index++; showQuestion(); } function showResult() { let text = ""; if (score >= 8) { text = "❤️ 他很大概率喜欢你！高度暗恋！"; } else if (score >= 5) { text = "💛 他对你有好感，但还不确定。"; } else { text = "💔 他可能并没有喜欢你。"; } document.getElementById("questions").innerHTML = ""; document.getElementById("result").innerText = text; } showQuestion(); </script> </body> </html>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>暗恋测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .question {
+            font-size: 20px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .btn {
+            width: 100%;
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 8px;
+            margin-top: 12px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #357abd;
+        }
+
+        #result {
+            font-size: 22px;
+            margin-top: 30px;
+            text-align: center;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>暗恋测试：TA 是否喜欢你？</h2>
+
+    <div id="questions"></div>
+    <div id="result"></div>
+</div>
+
+<script>
+    const questions = [
+        "1. TA 会主动找你聊天吗？",
+        "2. TA 看到你时会微笑吗？",
+        "3. TA 会主动帮你吗？",
+        "4. TA 对别人和对你态度不一样吗？",
+        "5. TA 愿意花时间陪你吗？",
+        "6. TA 会记住你的小细节吗？",
+        "7. TA 对你有耐心吗？",
+        "8. TA 会主动问你最近怎么样吗？",
+        "9. TA 愿意和你分享他的事情吗？",
+        "10. TA 见到你会紧张或害羞吗？"
+    ];
+
+    let score = 0;
+    let index = 0;
+
+    function showQuestion() {
+        if (index < questions.length) {
+            document.getElementById("questions").innerHTML = `
+                <div class="question">${questions[index]}</div>
+                <button class="btn" onclick="answer(1)">是的</button>
+                <button class="btn" onclick="answer(0)">不是</button>
+            `;
+        } else {
+            showResult();
+        }
+    }
+
+    function answer(value) {
+        score += value;
+        index++;
+        showQuestion();
+    }
+
+    function showResult() {
+        let text = "";
+        if (score >= 8) {
+            text = "❤️ 他非常喜欢你！暗恋概率极高！";
+        } else if (score >= 5) {
+            text = "💛 他对你有好感！但还没有完全确定。";
+        } else {
+            text = "💔 他可能暂时没有喜欢你。";
+        }
+        document.getElementById("questions").innerHTML = "";
+        document.getElementById("result").innerText = text;
+    }
+
+    showQuestion();
+</script>
+
+</body>
+</html>
