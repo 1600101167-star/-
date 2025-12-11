@@ -1,6 +1,76 @@
 <!DOCTYPE html>
 <html lang="zh">
-<head>
+<head><style>
+  body {
+    font-family: "微软雅黑", sans-serif;
+    background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+
+  .container {
+    width: 90%;
+    max-width: 480px;
+    background: #ffffffcc;
+    backdrop-filter: blur(10px);
+    padding: 20px 24px;
+    margin-top: 40px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    animation: fadeIn 0.6s ease;
+  }
+
+  h2 {
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .answer {
+    display: block;
+    background: #fff;
+    padding: 12px 18px;
+    margin: 10px 0;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid #eee;
+    transition: 0.25s;
+  }
+
+  .answer:hover {
+    background: #ffb7c5;
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  button {
+    width: 100%;
+    background: #ff7fa1;
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #ff4f88;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0);   }
+  }
+</style>
     <meta charset="UTF-8">
     <title>暗恋测试</title>
     <style>
@@ -117,3 +187,4 @@
 
 </body>
 </html>
+
