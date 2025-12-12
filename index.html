@@ -4,59 +4,99 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>暗恋测试</title>
+
 <style>
- body{
-  margin:0;
-  font-family:'微软雅黑';
-  background:#ffeef3;
-  color:#333;
- }
- .page{display:none;padding:20px;}
- .active{display:block;}
- h1{text-align:center;color:#ff3b6a;margin-top:30px;font-size:28px;}
- button{
-  width:90%;
-  margin:20px auto;
-  padding:14px;
-  border:none;
-  border-radius:12px;
-  background:#ff3b6a;
-  color:#fff;
-  font-size:18px;
-  display:block;
- }
- .card{
-  background:#fff;
-  padding:20px;
-  border-radius:16px;
-  box-shadow:0 4px 10px rgba(0,0,0,.1);
- }
- .option{
-  padding:14px;
-  background:#ffd9e4;
-  border-radius:12px;
-  margin-top:12px;
-  font-size:16px;
- }
- .progress{
-  width:90%;
-  height:10px;
-  background:#fff;
-  border-radius:10px;
-  margin:20px auto;
- }
- .progress-inner{
-  height:100%;
-  width:0%;
-  background:#ff3b6a;
-  border-radius:10px;
-  transition:.3s;
- }
- #poster{
-  background:#ffe3ed;
-  padding:20px;
-  border-radius:18px;
- }
+/* 背景渐变（更小红书） */
+body{
+ margin:0;
+ font-family:'微软雅黑';
+ background:linear-gradient(180deg,#ffeaf1,#ffd4e2,#ffeaf1);
+ min-height:100vh;
+ color:#333;
+}
+
+/* 淡入动画 */
+@keyframes fadeUp{
+ from{opacity:0;transform:translateY(20px);}
+ to{opacity:1;transform:translateY(0);}
+}
+
+.page{display:none;padding:20px;}
+.active{display:block;animation:fadeUp .5s ease;}
+
+h1{
+ text-align:center;
+ color:#ff3b6a;
+ margin-top:30px;
+ font-size:28px;
+ letter-spacing:1px;
+ font-weight:700;
+}
+
+button{
+ width:90%;
+ margin:20px auto;
+ padding:14px;
+ border:none;
+ border-radius:14px;
+ background:#ff3b6a;
+ color:#fff;
+ font-size:18px;
+ display:block;
+ box-shadow:0 4px 10px rgba(255,59,106,0.3);
+ transition:.2s;
+}
+button:active{
+ transform:scale(0.96);
+}
+
+/* 卡片增加轻微浮起动画 + 阴影 */
+.card{
+ background:#fff;
+ padding:20px;
+ border-radius:18px;
+ box-shadow:0 6px 15px rgba(0,0,0,.12);
+ animation:fadeUp .5s ease;
+}
+
+.option{
+ padding:14px;
+ background:#ffd9e4;
+ border-radius:13px;
+ margin-top:12px;
+ font-size:17px;
+ transition:.15s ease;
+}
+.option:active{
+ transform:scale(0.95);
+ background:#ffc7d7;
+}
+
+/* progress 样式更柔和 */
+.progress{
+ width:90%;
+ height:12px;
+ background:#ffffffaa;
+ border-radius:10px;
+ margin:20px auto;
+ overflow:hidden;
+}
+.progress-inner{
+ height:100%;
+ width:0%;
+ background:#ff3b6a;
+ border-radius:10px;
+ transition:width .35s ease;
+}
+
+/* 分享海报粉色光晕 */
+#poster{
+ background:#ffe3ed;
+ padding:20px;
+ border-radius:20px;
+ box-shadow:0 0 25px rgba(255,50,120,0.25);
+ animation:fadeUp .6s ease;
+}
 </style>
 </head>
 <body>
@@ -65,7 +105,7 @@
 <div id="page-start" class="page active">
  <h1>暗恋测试</h1>
  <div class="card">
-  <p style="text-align:center;color:#666;">浅粉·小红书风·甜甜暗恋感</p >
+  <p style="text-align:center;color:#666;margin-bottom:14px;">粉色小红书风 · 暗恋甜度测量</p >
   <input id="username" placeholder="输入你的名字"
    style="width:90%;padding:12px;border-radius:10px;border:1px solid #ddd;display:block;margin:0 auto;">
   <button onclick="startTest()">开始测试</button>
@@ -94,17 +134,18 @@
 </div>
 
 <script>
+/* 题目内容（暗恋专属） */
 const questions=[
- {q:"TA 看你的眼神是否会闪烁、温柔或停留特别久？",s:[3,2,1]},
- {q:"TA 会主动找你聊天或创造对话机会吗？",s:[3,2,1]},
- {q:"你发朋友圈时，TA 的点赞/回复频率如何？",s:[3,2,1]},
- {q:"你的一点小变化（发型/穿搭），TA 会注意到吗？",s:[3,2,1]},
- {q:"你单独和 TA 相处时，对方会出现紧张、激动或不自然吗？",s:[3,2,1]},
- {q:"TA 是否会记住你说过的小细节？",s:[3,2,1]},
- {q:"你不开心时 TA 的反应是？",s:[3,2,1]},
- {q:"TA 是否会偷偷观察你、关注你？",s:[3,2,1]},
- {q:"TA 和别人聊天时，会经常提到你吗？",s:[3,2,1]},
- {q:"你感觉 TA 对你是否比对别人特别？",s:[3,2,1]}
+ {q:"TA 看你的眼神，会不会闪一下、躲一下、又看回来？",s:[3,2,1]},
+ {q:"TA 会主动找你聊天或创造话题吗？",s:[3,2,1]},
+ {q:"你发朋友圈时，TA 的点赞/回复是否特别稳定？",s:[3,2,1]},
+ {q:"你换了发型或穿搭，TA 会注意到吗？",s:[3,2,1]},
+ {q:"和 TA 单独在一起时，对方会紧张、兴奋或害羞吗？",s:[3,2,1]},
+ {q:"TA 是否会记住你说过的细小喜好？",s:[3,2,1]},
+ {q:"你低落时，TA 会明显关心你吗？",s:[3,2,1]},
+ {q:"TA 会不会偷偷观察你（但以为你不知道）？",s:[3,2,1]},
+ {q:"TA 和别人谈话时，会下意识提到你吗？",s:[3,2,1]},
+ {q:"你直觉觉得 TA 是否对你特别？",s:[3,2,1]}
 ];
 
 let index=0,score=0,nameUser="";
@@ -119,7 +160,7 @@ function startTest(){
 function loadQ(){
  let q=questions[index];
  document.getElementById("question-box").innerHTML=`
-  <h2>${q.q}</h2>
+  <h2 style='color:#ff3b6a;'>${q.q}</h2>
   <div class="option" onclick="choose(0)">非常明显</div>
   <div class="option" onclick="choose(1)">有一点</div>
   <div class="option" onclick="choose(2)">看不出来</div>
@@ -134,12 +175,22 @@ function choose(n){
  else loadQ();
 }
 
+/* 更甜、更小红书风的文案 */
 function resText(s){
  if(s>=24)
-   return{t:"TA 很大概率暗恋你 ❤️",c:`${nameUser}，各种迹象都说明 TA 对你真的特别！`};
+   return{
+     t:"TA 真的暗恋你！❤️",
+     c:`${nameUser}，这些细节骗不了人——TA 对你特别、在意、藏不住。`
+   };
  if(s>=18)
-   return{t:"TA 对你有好感 🌸",c:`${nameUser}，TA 对你有感觉，但可能还没到暗恋程度。`};
- return{t:"暂时没有暗恋迹象 😳",c:`${nameUser}，目前更像普通朋友关系。`};
+   return{
+     t:"TA 对你有明显好感 🌸",
+     c:`${nameUser}，TA 对你是有感觉的，只是暗恋还没有完全发酵。`
+   };
+ return{
+   t:"暂时没有暗恋痕迹 😳",
+   c:`${nameUser}，你们现在更像朋友，也许以后会变哦～`
+ };
 }
 
 function showR(){
@@ -147,22 +198,23 @@ function showR(){
  document.getElementById("page-result").classList.add("active");
  let r=resText(score);
  document.getElementById("result-box").innerHTML=
-  `<h2>${r.t}</h2><p>${r.c}</p >`;
+  `<h2>${r.t}</h2><p style='color:#555;font-size:17px;'>${r.c}</p >`;
 }
 
 function makePoster(){
  document.getElementById("page-result").classList.remove("active");
  document.getElementById("page-poster").classList.add("active");
  let r=resText(score);
+
  document.getElementById("poster").innerHTML=`
-  <div style='background:#fff;padding:20px;border-radius:16px;
-              box-shadow:0 4px 10px rgba(0,0,0,.1);'>
-   <h2 style='color:#ff3b6a;'>暗恋测试报告</h2>
-   <p>昵称：${nameUser}</p >
-   <p style='font-size:22px;color:#ff3b6a;font-weight:bold;'>${r.t}</p >
-   <p>${r.c}</p >
+  <div style='background:#fff;padding:20px;border-radius:18px;
+              box-shadow:0 0 18px rgba(255,80,120,.35);'>
+   <h2 style='color:#ff3b6a;margin-bottom:10px;'>暗恋测试报告</h2>
+   <p style='font-size:17px;'>昵称：<b>${nameUser}</b></p >
+   <p style='font-size:22px;color:#ff3b6a;font-weight:bold;margin-top:15px;'>${r.t}</p >
+   <p style='margin-top:10px;font-size:16px;color:#444;'>${r.c}</p >
   </div>
-  <p style='text-align:center;color:#ff3b6a;margin-top:10px;'>长按保存海报</p >
+  <p style='text-align:center;color:#ff3b6a;margin-top:14px;font-size:15px;'>· 长按保存海报 ·</p >
  `;
 }
 
@@ -174,5 +226,6 @@ function restart(){
  document.getElementById("page-start").classList.add("active");
 }
 </script>
+
 </body>
 </html>
