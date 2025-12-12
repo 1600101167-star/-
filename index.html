@@ -1,236 +1,454 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<meta charset="UTF-8">
-<title>心理测试 · 乐观的兔子</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>小红书风 · 暗恋测试</title>
 <style>
-    body{
-        margin:0;
-        font-family:"Arial", sans-serif;
-        background:#f4f4f4;
-    }
-    .page{
-        width:100%;
-        max-width:480px;
-        margin:0 auto;
-        min-height:100vh;
-        background:white;
-        padding:20px;
-        box-sizing:border-box;
-        display:none;
-        animation:fadeIn .4s;
-    }
-    @keyframes fadeIn{
-        from{opacity:0;}
-        to{opacity:1;}
-    }
+  :root{
+    --primary:#ff2d55;
+    --bg:#faf6f7;
+    --card:#ffffff;
+    --muted:#777;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",Arial;
+    background:var(--bg);
+    color:#222;
+    -webkit-font-smoothing:antialiased;
+  }
 
-    /* 封面页 */
-    .cover{
-        text-align:center;
-        padding-top:80px;
-    }
-    .btn{
-        background:#4B7BE5;
-        color:white;
-        padding:12px 20px;
-        border-radius:10px;
-        display:inline-block;
-        margin-top:25px;
-        font-size:18px;
-        cursor:pointer;
-        transition:.2s;
-    }
-    .btn:hover{
-        background:#345FD0;
-    }
+  .wrap{
+    max-width:520px;
+    margin:0 auto;
+    padding:18px;
+  }
 
-    /* 题目卡片 */
-    .card{
-        background:white;
-        border-radius:12px;
-        padding:20px;
-        margin-top:40px;
-        box-shadow:0 4px 20px rgba(0,0,0,0.1);
-        animation:slide .35s;
-    }
-    @keyframes slide{
-        from{transform:translateY(30px);opacity:0;}
-        to{transform:translateY(0);opacity:1;}
-    }
+  /* header small XHS style */
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:8px;
+  }
+  .logo{
+    width:44px;height:44px;border-radius:10px;
+    background:linear-gradient(135deg,var(--primary), #ff6f87);
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;
+    box-shadow:0 6px 20px rgba(255,45,85,0.12);
+  }
+  .brand h1{font-size:18px;margin:0}
+  .brand p{margin:0;font-size:12px;color:var(--muted)}
 
-    .option{
-        background:#F0F3FF;
-        padding:12px;
-        margin:12px 0;
-        border-radius:8px;
-        cursor:pointer;
-    }
-    .option:hover{
-        background:#dbe3ff;
-    }
+  /* cover */
+  .cover{
+    margin-top:16px;
+    text-align:center;
+  }
+  .cover-card{
+    background:var(--card);
+    padding:28px 20px;border-radius:22px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.06);
+  }
+  .cover-title{
+    color:var(--primary);
+    font-size:26px;font-weight:800;margin:0 0 8px;
+    letter-spacing:0.6px;
+  }
+  .cover-desc{color:var(--muted);margin:0 0 14px}
+  .input-row{display:flex;gap:10px;justify-content:center;margin-top:8px}
+  .name-input{
+    width:66%;
+    padding:10px 12px;border-radius:12px;border:1px solid #f0d6db;
+    outline:none;background:#fff;
+    font-size:15px;
+  }
+  .start-btn{
+    background:var(--primary);color:#fff;padding:10px 16px;border-radius:12px;border:none;
+    cursor:pointer;font-size:15px;
+    box-shadow:0 8px 18px rgba(255,45,85,0.12);
+  }
+  .start-btn:active{transform:scale(.98)}
 
-    /* 进度条 */
-    .progress-box{
-        width:100%;
-        height:10px;
-        background:#e0e0e0;
-        border-radius:5px;
-        margin-top:30px;
-        overflow:hidden;
-    }
-    .progress{
-        height:100%;
-        width:0%;
-        background:#4B7BE5;
-        transition:.3s;
-    }
+  /* test card */
+  .card{background:var(--card);padding:20px;border-radius:18px;margin-top:18px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.06); animation:floatUp .36s ease;}
+  @keyframes floatUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-    /* 结果页 */
-    .result-text{
-        margin-top:40px;
-        font-size:20px;
-        text-align:center;
-        line-height:1.6;
-    }
+  .qnum{font-size:13px;color:var(--muted);margin-bottom:8px}
+  .question{font-size:18px;font-weight:700;margin-bottom:12px}
 
-    /* 分享图页面 */
-    .share-img-box{
-        padding:30px;
-        background:white;
-        text-align:center;
-    }
-    .share-card{
-        padding:20px;
-        background:#F5F8FF;
-        border-radius:16px;
-        border:1px solid #C8D5FF;
-    }
+  .option{
+    background:#fff;border-radius:12px;padding:12px 14px;margin:10px 0;border:1px solid #fee5ea;
+    cursor:pointer;font-size:15px;color:#222;
+    transition:transform .12s, box-shadow .12s, background .12s;
+  }
+  .option:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(255,45,85,0.08); background:linear-gradient(90deg,#fff 0%, #fff3f6 100%)}
+  .option span{display:inline-block;margin-left:10px}
+
+  /* progress */
+  .progress-wrap{margin-top:12px;height:10px;background:#f3f3f3;border-radius:6px;overflow:hidden}
+  .progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--primary),#ff6f87);transition:width .35s}
+
+  /* result */
+  .result-card{text-align:center;padding:26px;border-radius:18px;background:var(--card);
+    box-shadow:0 10px 30px rgba(0,0,0,0.06);margin-top:22px}
+  .result-title{color:var(--primary);font-size:20px;font-weight:800;margin-bottom:8px}
+  .result-text{color:#444;line-height:1.6;margin-bottom:12px}
+
+  .small-btn{display:inline-block;padding:10px 14px;border-radius:12px;background:#fff;border:1px solid #fde6eb;color:var(--primary);cursor:pointer}
+  .small-btn:hover{background:linear-gradient(90deg,#fff,#fff8f9)}
+
+  /* share modal */
+  .modal{
+    position:fixed;left:0;right:0;top:0;bottom:0;background:rgba(0,0,0,0.45);
+    display:none;align-items:center;justify-content:center;padding:20px;z-index:9999;
+  }
+  .modal-card{background:white;padding:18px;border-radius:14px;max-width:440px;width:100%;text-align:center}
+  .share-img{width:100%;border-radius:12px;display:block;max-height:720px;object-fit:contain}
+  .download-btn{display:inline-block;margin-top:10px;padding:10px 14px;border-radius:12px;background:var(--primary);color:#fff;border:none;cursor:pointer}
+
+  /* responsive */
+  @media (max-width:520px){
+    .wrap{padding:14px}
+    .cover-card{padding:22px}
+    .question{font-size:17px}
+  }
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<!-- 封面页 -->
-<div class="page" id="cover" style="display:block;">
-    <div class="cover">
-        <h1>心理测试</h1>
-        <p>看看你的内心属于哪一类？</p >
-        <div class="btn" onclick="startTest()">开始测试</div>
+  <div class="brand">
+    <div class="logo">TA</div>
+    <div>
+      <h1>暗恋测试</h1>
+      <p>小红书风 · 10 道题 · 自动生成海报</p >
     </div>
-</div>
+  </div>
 
-<!-- 测试页 -->
-<div class="page" id="test">
-    <h2 id="qnum">题目 1 / 10</h2>
+  <!-- cover -->
+  <div id="cover" class="cover">
+    <div class="cover-card">
+      <div class="cover-title">TA 是不是在暗恋你？</div>
+      <div class="cover-desc">填写你的昵称 → 开始答题，完成后可生成专属小红书风海报</div>
 
-    <div class="progress-box">
-        <div class="progress" id="progress"></div>
+      <div class="input-row" style="justify-content:center;margin-top:14px">
+        <input id="nickname" class="name-input" placeholder="输入你的昵称（可不填）" maxlength="20" />
+        <button class="start-btn" onclick="startTest()">开始</button>
+      </div>
     </div>
+  </div>
 
+  <!-- questions container -->
+  <div id="qwrap" style="display:none">
     <div class="card">
-        <div id="question" style="font-size:19px;font-weight:bold;"></div>
-        <div id="options"></div>
+      <div class="qnum" id="qnum">第 1 / 10 题</div>
+      <div class="question" id="question">问题加载中…</div>
+
+      <div id="opts"></div>
+
+      <div class="progress-wrap">
+        <div class="progress-bar" id="pbar"></div>
+      </div>
     </div>
+  </div>
+
+  <!-- result -->
+  <div id="resultWrap" style="display:none">
+    <div class="result-card">
+      <div class="result-title">测试结果</div>
+      <div class="result-text" id="resultText">加载结果...</div>
+
+      <div style="margin-top:12px">
+        <button class="small-btn" onclick="restart()">再测一次</button>
+        <button class="small-btn" id="saveBtn" style="margin-left:8px;border:0;background:linear-gradient(90deg,var(--primary),#ff6f87);color:#fff" onclick="generatePoster()">生成海报</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<!-- 结果页 -->
-<div class="page" id="result">
-    <h2>测试结果</h2>
-    <div class="result-text" id="result-text"></div>
-
-    <div class="btn" onclick="showShare()">生成分享图</div>
-</div>
-
-<!-- 分享图页面 -->
-<div class="page" id="share">
-    <h2>分享图</h2>
-    <div class="share-img-box">
-        <div class="share-card">
-            <h3>心理测试 · 结果</h3>
-            <p id="share-result" style="font-size:20px;margin-top:20px;"></p >
-        </div>
+<!-- share modal -->
+<div id="modal" class="modal" onclick="closeModal(event)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div style="font-weight:700;margin-bottom:8px">长按保存海报（或点击下载）</div>
+    < img id="shareImage" class="share-img" src="" alt="分享海报" />
+    <div style="margin-top:10px">
+      <a id="downloadLink" href=" " download="暗恋测试海报.png" class="download-btn">下载图片</a >
     </div>
-
-    <p style="text-align:center;margin-top:20px;">截图后可发朋友圈</p >
-
-    <div class="btn" onclick="restart()">再测一次</div>
+    <div style="margin-top:8px;color:#666;font-size:12px">保存后可分享到小红书 / 朋友圈</div>
+  </div>
 </div>
 
 <script>
+/* ========== 题库（暗恋专用 10 题） ========== */
 const questions = [
-    { q:"你做决定时更依赖什么？", a:["直觉","分析"] },
-    { q:"你更喜欢的社交方式？", a:["热闹群聚","安静一对一"] },
-    { q:"工作遇到困难时，你一般会？", a:["马上解决","拖一下再说"] },
-    { q:"你更看重？", a:["安全感","自由感"] },
-    { q:"朋友找你倾诉，你通常？", a:["给建议","陪伴聆听"] },
-    { q:"你愿意尝试新事物吗？", a:["很愿意","不太愿意"] },
-    { q:"压力大的时候，你会？", a:["运动释放","自己消化"] },
-    { q:"你偏向哪种生活？", a:["规划明确","随性流动"] },
-    { q:"你属于哪种性格？", a:["外向表达","内向思考"] },
-    { q:"你对未来的看法？", a:["乐观积极","谨慎保守"] }
+  "你们聊天时，如果你不回消息，TA 会主动来找你吗？",
+  "TA 在你面前会变得拘谨或紧张吗？",
+  "TA 是否会记住你说过的小细节？",
+  "TA 会主动找理由和你单独相处吗？",
+  "TA 在你遇到困难时会特别关心你吗？",
+  "TA 是否会在朋友圈对你有不同的互动（点赞/评论/私信）？",
+  "你们对话时，TA 会问很多关于你未来/感情的问题吗？",
+  "TA 是否会分享只想给你看的东西（链接/音乐/秘密）？",
+  "TA 看到你时会表现出明显的关注（眼神/表情）吗？",
+  "TA 曾经试探过你的感情状态或问你有没有喜欢的人吗？"
 ];
 
-let index = 0;
+let idx = 0;
 let score = 0;
+let nick = "";
 
+/* 开始测试 */
 function startTest(){
-    document.getElementById("cover").style.display="none";
-    document.getElementById("test").style.display="block";
-    loadQ();
+  nick = (document.getElementById('nickname').value || '').trim();
+  document.getElementById('cover').style.display = 'none';
+  document.getElementById('qwrap').style.display = 'block';
+  idx = 0; score = 0;
+  renderQuestion();
 }
 
-function loadQ(){
-    document.getElementById("qnum").innerText = `题目 ${index+1} / ${questions.length}`;
-    document.getElementById("question").innerText = questions[index].q;
+/* 渲染题目 */
+function renderQuestion(){
+  if(idx >= questions.length){
+    showResult();
+    return;
+  }
+  const q = questions[idx];
+  document.getElementById('qnum').innerText = `第 ${idx+1} / ${questions.length} 题`;
+  document.getElementById('question').innerText = q;
 
-    let opHTML = "";
-    questions[index].a.forEach((op,i)=>{
-        opHTML += `<div class='option' onclick='choose(${i})'>${op}</div>`;
-    });
-    document.getElementById("options").innerHTML = opHTML;
+  // 两个选项：是 / 否（是 = 1分）
+  const opts = document.getElementById('opts');
+  opts.innerHTML = '';
+  const yes = createOption('A. 是的，很明显', ()=>choose(1));
+  const no  = createOption('B. 不太是', ()=>choose(0));
+  opts.appendChild(yes); opts.appendChild(no);
 
-    document.getElementById("progress").style.width = (index+1)*10 + "%";
+  // 进度
+  const pct = Math.round((idx/questions.length)*100);
+  document.getElementById('pbar').style.width = pct + '%';
 }
 
-/* 简单计分：选第一项加1分 */
-function choose(opt){
-    if(opt===0) score++;
-    index++;
-
-    if(index>=questions.length){
-        showResult();
-    }else{
-        loadQ();
-    }
+function createOption(label, onClick){
+  const d = document.createElement('div');
+  d.className = 'option';
+  d.innerHTML = `<strong style="color:var(--primary);">${label.split('.')[0]}</strong><span>${label.substring(3)}</span>`;
+  d.onclick = ()=>{
+    d.animate([{transform:'translateY(0)'},{transform:'translateY(-6px)'},{transform:'translateY(0)'}],{duration:220});
+    setTimeout(onClick,120);
+  };
+  return d;
 }
 
+/* 选择 */
+function choose(v){
+  score += v;
+  idx++;
+  renderQuestion();
+}
+
+/* 结果显示 */
 function showResult(){
-    document.getElementById("test").style.display="none";
-    document.getElementById("result").style.display="block";
+  document.getElementById('qwrap').style.display = 'none';
+  document.getElementById('resultWrap').style.display = 'block';
 
-    let text="";
-    if(score>=7) text="你属于：🌟 积极乐观型<br>内心强大、自带能量";
-    else if(score>=4) text="你属于：✨ 平衡理性型<br>稳定可靠、判断清晰";
-    else text="你属于：🌙 温柔细腻型<br>感受力强、直觉敏锐";
+  let level = '';
+  let text = '';
+  if(score >= 8){
+    level = '高度暗恋';
+    text = '💖 十有八九 TA 在暗恋你！很多细节都在说明：TA 时刻在意你，想靠近你。';
+  }else if(score >= 5){
+    level = '有好感';
+    text = '🌸 TA 对你有明显好感，但还在试探与观察。若你也有意思，多给回应会很有效。';
+  }else{
+    level = '目前是朋友';
+    text = '🍃 目前更多像朋友关系，TA 暂未表现出明显恋慕。但感情可以慢慢培养。';
+  }
 
-    document.getElementById("result-text").innerHTML = text;
-    document.getElementById("share-result").innerHTML = text.replace(/<br>/g," · ");
+  const nickText = nick ? `${nick}，` : '';
+  document.getElementById('resultText').innerHTML = `<div style="font-size:15px;margin-bottom:8px">${nickText}<strong style="color:var(--primary)">${level}</strong></div><div style="color:#555;line-height:1.6">${text}</div>`;
 }
 
-function showShare(){
-    document.getElementById("result").style.display="none";
-    document.getElementById("share").style.display="block";
-}
-
+/* 再测一次 */
 function restart(){
-    index=0;
-    score=0;
-    document.getElementById("share").style.display="none";
-    document.getElementById("cover").style.display="block";
+  idx = 0; score = 0; nick = '';
+  document.getElementById('nickname').value = '';
+  document.getElementById('resultWrap').style.display = 'none';
+  document.getElementById('cover').style.display = 'block';
 }
-</script>
 
+/* 生成分享海报（静态） */
+function generatePoster(){
+  // canvas 绘制 900x1200（竖）适合分享
+  const canvasW = 900;
+  const canvasH = 1200;
+  const scale = window.devicePixelRatio || 1;
+  const canvas = document.createElement('canvas');
+  canvas.width = canvasW * scale;
+  canvas.height = canvasH * scale;
+  canvas.style.width = canvasW + 'px';
+  canvas.style.height = canvasH + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(scale, scale);
+
+  // 背景粉色渐变
+  const g = ctx.createLinearGradient(0,0,canvasW,canvasH);
+  g.addColorStop(0,'#fff0f2');
+  g.addColorStop(1,'#ffeef3');
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,canvasW,canvasH);
+
+  // 顶部装饰条
+  ctx.fillStyle = 'rgba(255,45,85,0.08)';
+  roundRect(ctx,20,20,canvasW-40,160,20,true,false);
+
+  // 标题
+  ctx.fillStyle = '#ff2d55';
+  ctx.font = 'bold 36px "PingFang SC", "Microsoft YaHei"';
+  ctx.textAlign = 'left';
+  ctx.fillText('TA 是不是在暗恋你？', 40, 78);
+
+  // 昵称与等级
+  const name = nick || '匿名';
+  let level = '';
+  let short = '';
+  if(score >= 8){
+    level = '高度暗恋';
+    short = '十有八九 TA 在暗恋你！';
+  } else if(score >=5){
+    level = '有好感';
+    short = 'TA 对你有明显好感～';
+  } else {
+    level = '目前是朋友';
+    short = '更多像朋友，慢慢来～';
+  }
+
+  ctx.fillStyle = '#333';
+  ctx.font = 'bold 28px "PingFang SC", "Microsoft YaHei"';
+  ctx.fillText(`${name} 的暗恋结果：`, 40, 150);
+
+  // 卡片区域
+  const cardX = 40, cardY = 190, cardW = canvasW - 80, cardH = 520;
+  // 卡片背景白
+  ctx.fillStyle = '#fff';
+  roundRect(ctx, cardX, cardY, cardW, cardH, 20, true, false);
+
+  // 在卡片上写等级 (大)
+  ctx.fillStyle = '#ff2d55';
+  ctx.font = 'bold 42px "PingFang SC", "Microsoft YaHei"';
+  ctx.textAlign = 'left';
+  ctx.fillText(level, cardX + 34, cardY + 90);
+
+  // 结果短文
+  ctx.fillStyle = '#444';
+  ctx.font = '18px "PingFang SC", "Microsoft YaHei"';
+  wrapText(ctx, short, cardX + 34, cardY + 140, cardW - 68, 26);
+
+  // 细节：分数和提示
+  ctx.fillStyle = '#777';
+  ctx.font = '15px "PingFang SC", "Microsoft YaHei"';
+  ctx.fillText(`得分：${score} / ${questions.length}`, cardX + 34, cardY + 220);
+  ctx.fillText('提示：测试仅供参考，真实关系要看日常互动哦。', cardX + 34, cardY + 250);
+
+  // 底部小红书风标签
+  ctx.fillStyle = '#ff2d55';
+  ctx.font = 'bold 16px "PingFang SC", "Microsoft YaHei"';
+  ctx.fillText('— 小红书风暗恋测试 —', cardX + 34, cardY + cardH - 34);
+
+  // corner heart icon
+  drawHeart(ctx, canvasW - 110, cardY + 40, 36, '#ff2d55');
+
+  // 导出图片并展示 modal
+  const dataURL = canvas.toDataURL('image/png');
+  showModalWithImage(dataURL);
+}
+
+/* helpers: rounded rect */
+function roundRect(ctx, x, y, w, h, r, fill, stroke){
+  if (typeof r === 'undefined') r = 5;
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+  if(fill){ ctx.fill(); }
+  if(stroke){ ctx.stroke(); }
+}
+
+/* helpers: wrap text */
+function wrapText(ctx, text, x, y, maxWidth, lineHeight){
+  const words = text.split(' ');
+  let line = '';
+  // support Chinese characters: iterate by char when needed
+  // simpler: measure and break by char
+  let cur = '';
+  for(let i=0;i<text.length;i++){
+    cur += text[i];
+    const w = ctx.measureText(cur).width;
+    if(w > maxWidth){
+      ctx.fillText(cur.slice(0,-1), x, y);
+      cur = text[i];
+      y += lineHeight;
+    }
+  }
+  if(cur) ctx.fillText(cur, x, y);
+}
+
+/* draw simple heart */
+function drawHeart(ctx, x, y, size, color){
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  const topCurveHeight = size * 0.3;
+  ctx.moveTo(x, y + topCurveHeight);
+  ctx.bezierCurveTo(
+    x, y,
+    x - size/2, y,
+    x - size/2, y + topCurveHeight
+  );
+  ctx.bezierCurveTo(
+    x - size/2, y + (size+topCurveHeight)/2,
+    x, y + (size+topCurveHeight)/1.2,
+    x, y + size
+  );
+  ctx.bezierCurveTo(
+    x, y + (size+topCurveHeight)/1.2,
+    x + size/2, y + (size+topCurveHeight)/2,
+    x + size/2, y + topCurveHeight
+  );
+  ctx.bezierCurveTo(
+    x + size/2, y,
+    x, y,
+    x, y + topCurveHeight
+  );
+  ctx.closePath();
+  ctx.fill();
+}
+
+/* show modal */
+function showModalWithImage(dataURL){
+  const modal = document.getElementById('modal');
+  const img = document.getElementById('shareImage');
+  const link = document.getElementById('downloadLink');
+  img.src = dataURL;
+  link.href = dataURL;
+  modal.style.display = 'flex';
+}
+
+/* close modal */
+function closeModal(e){
+  document.getElementById('modal').style.display = 'none';
+}
+
+/* utility for copy / fallback */
+document.addEventListener('DOMContentLoaded', ()=>{
+  // tap outside modal closes handled by onclick
+});
+</script>
 </body>
 </html>
