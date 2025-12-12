@@ -4,286 +4,175 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>暗恋测试</title>
-
 <style>
-body {
-    margin: 0;
-    background: #fff;
-    font-family: '微软雅黑', sans-serif;
-    color: #333;
-}
-
-.page {
-    display: none;
-    padding: 20px;
-}
-
-.active {
-    display: block;
-}
-
-h1 {
-    font-size: 28px;
-    color: #FF2442;
-    text-align: center;
-    margin-top: 40px;
-}
-
-button {
-    width: 90%;
-    display: block;
-    margin: 20px auto;
-    padding: 15px;
-    background: #FF2442;
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(255,36,66,.3);
-    transition: 0.2s;
-}
-button:active { transform: scale(.96); }
-
-.card {
-    background: #fff;
-    padding: 25px;
-    margin-top: 20px;
-    border-radius: 18px;
-    box-shadow: 0 4px 16px rgba(0,0,0,.08);
-    animation: fadeIn .4s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.option {
-    padding: 15px;
-    background: #ffe6ea;
-    border-radius: 12px;
-    margin: 10px 0;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: 0.2s;
-}
-.option:hover {
-    border-color: #FF2442;
-}
-
-.progress {
-    width: 90%;
-    height: 10px;
-    background: #f5f5f5;
-    border-radius: 10px;
-    margin: 20px auto;
-}
-.progress-inner {
-    height: 100%;
-    width: 0%;
-    background: #FF2442;
-    border-radius: 10px;
-    transition: .3s;
-}
-
-#poster {
-    width: 100%;
-    background: #ffe7ed;
-    border-radius: 18px;
-    padding: 20px;
-    text-align: center;
-}
-
-.poster-title {
-    font-size: 22px;
-    color: #FF2442;
-    margin-bottom: 10px;
-}
-
-.poster-box {
-    background: #fff;
-    padding: 20px;
-    border-radius: 18px;
-    margin-top: 10px;
-    box-shadow: 0 4px 14px rgba(0,0,0,.1);
-}
-
+ body{
+  margin:0;
+  font-family:'微软雅黑';
+  background:#ffeef3;
+  color:#333;
+ }
+ .page{display:none;padding:20px;}
+ .active{display:block;}
+ h1{text-align:center;color:#ff3b6a;margin-top:30px;font-size:28px;}
+ button{
+  width:90%;
+  margin:20px auto;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  background:#ff3b6a;
+  color:#fff;
+  font-size:18px;
+  display:block;
+ }
+ .card{
+  background:#fff;
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+ }
+ .option{
+  padding:14px;
+  background:#ffd9e4;
+  border-radius:12px;
+  margin-top:12px;
+  font-size:16px;
+ }
+ .progress{
+  width:90%;
+  height:10px;
+  background:#fff;
+  border-radius:10px;
+  margin:20px auto;
+ }
+ .progress-inner{
+  height:100%;
+  width:0%;
+  background:#ff3b6a;
+  border-radius:10px;
+  transition:.3s;
+ }
+ #poster{
+  background:#ffe3ed;
+  padding:20px;
+  border-radius:18px;
+ }
 </style>
 </head>
-
 <body>
 
 <!-- 封面页 -->
 <div id="page-start" class="page active">
-    <h1>💗 暗恋测试</h1>
-    <div class="card">
-        <p style="text-align:center;font-size:18px;">测试 TA 是否暗恋你？</p >
-        <input id="username" placeholder="输入你的名字" style="width:90%;margin:20px auto;padding:12px;font-size:16px;border-radius:10px;border:1px solid #ddd;display:block;">
-        <button onclick="startTest()">开始测试</button>
-    </div>
+ <h1>暗恋测试</h1>
+ <div class="card">
+  <p style="text-align:center;color:#666;">浅粉·小红书风·甜甜暗恋感</p >
+  <input id="username" placeholder="输入你的名字"
+   style="width:90%;padding:12px;border-radius:10px;border:1px solid #ddd;display:block;margin:0 auto;">
+  <button onclick="startTest()">开始测试</button>
+ </div>
 </div>
-
 
 <!-- 测试页 -->
 <div id="page-test" class="page">
-    <div class="progress"><div class="progress-inner" id="bar"></div></div>
-    <div id="question-box" class="card"></div>
+ <div class="progress"><div class="progress-inner" id="bar"></div></div>
+ <div id="question-box" class="card"></div>
 </div>
-
 
 <!-- 结果页 -->
 <div id="page-result" class="page">
-    <h1>测试结果</h1>
-    <div id="result-box" class="card"></div>
-    <button onclick="makePoster()">生成小红书风海报</button>
-    <button onclick="restart()">再测一次</button>
+ <h1>测试结果</h1>
+ <div id="result-box" class="card"></div>
+ <button onclick="makePoster()">生成海报</button>
+ <button onclick="restart()">再测一次</button>
 </div>
 
-
-<!-- 海报页 -->
+<!-- 分享海报页 -->
 <div id="page-poster" class="page">
-    <h1>分享海报</h1>
-    <div id="poster"></div>
-    <button onclick="restart()">再测一次</button>
+ <h1>分享海报</h1>
+ <div id="poster"></div>
+ <button onclick="restart()">再测一次</button>
 </div>
 
 <script>
-// 题库（暗恋测试）
-const questions = [
-    {
-        q: "TA 看你的眼神和别人不同吗？",
-        s: [3,2,1]
-    },
-    {
-        q: "你和 TA 聊天时，TA 会秒回吗？",
-        s: [3,2,1]
-    },
-    {
-        q: "你发朋友圈时，TA 会立刻来看吗？",
-        s: [3,2,1]
-    },
-    {
-        q: "TA 有偷偷关注你的小细节吗？",
-        s: [3,2,1]
-    },
-    {
-        q: "你和 TA 单独相处时，会不自然吗？",
-        s: [3,2,1]
-    },
-    {
-        q: "TA 主动找你聊天的频率如何？",
-        s: [3,2,1]
-    },
-    {
-        q: "你生气时 TA 的关心程度？",
-        s: [3,2,1]
-    },
-    {
-        q: "TA 会记住你的喜好吗？",
-        s: [3,2,1]
-    },
-    {
-        q: "TA 会向朋友提起你吗？",
-        s: [3,2,1]
-    },
-    {
-        q: "你觉得 TA 对你特别吗？",
-        s: [3,2,1]
-    }
+const questions=[
+ {q:"TA 看你的眼神是否会闪烁、温柔或停留特别久？",s:[3,2,1]},
+ {q:"TA 会主动找你聊天或创造对话机会吗？",s:[3,2,1]},
+ {q:"你发朋友圈时，TA 的点赞/回复频率如何？",s:[3,2,1]},
+ {q:"你的一点小变化（发型/穿搭），TA 会注意到吗？",s:[3,2,1]},
+ {q:"你单独和 TA 相处时，对方会出现紧张、激动或不自然吗？",s:[3,2,1]},
+ {q:"TA 是否会记住你说过的小细节？",s:[3,2,1]},
+ {q:"你不开心时 TA 的反应是？",s:[3,2,1]},
+ {q:"TA 是否会偷偷观察你、关注你？",s:[3,2,1]},
+ {q:"TA 和别人聊天时，会经常提到你吗？",s:[3,2,1]},
+ {q:"你感觉 TA 对你是否比对别人特别？",s:[3,2,1]}
 ];
 
-let index = 0;
-let score = 0;
-let nameUser = "";
+let index=0,score=0,nameUser="";
 
-// 开始测试
 function startTest(){
-    nameUser = document.getElementById("username").value || "你";
-    document.getElementById("page-start").classList.remove("active");
-    document.getElementById("page-test").classList.add("active");
-    loadQuestion();
+ nameUser=document.getElementById("username").value||"你";
+ document.getElementById("page-start").classList.remove("active");
+ document.getElementById("page-test").classList.add("active");
+ loadQ();
 }
 
-// 加载题目
-function loadQuestion(){
-    let q = questions[index];
-    let box = document.getElementById("question-box");
-    box.innerHTML = `
-        <h2>${q.q}</h2>
-        <div class="option" onclick="choose(0)">非常明显</div>
-        <div class="option" onclick="choose(1)">有一点</div>
-        <div class="option" onclick="choose(2)">看不出来</div>
-    `;
-    document.getElementById("bar").style.width = (index / questions.length) * 100 + "%";
+function loadQ(){
+ let q=questions[index];
+ document.getElementById("question-box").innerHTML=`
+  <h2>${q.q}</h2>
+  <div class="option" onclick="choose(0)">非常明显</div>
+  <div class="option" onclick="choose(1)">有一点</div>
+  <div class="option" onclick="choose(2)">看不出来</div>
+ `;
+ document.getElementById("bar").style.width=(index/questions.length)*100+"%";
 }
 
 function choose(n){
-    score += questions[index].s[n];
-    index++;
-    if(index >= questions.length){ showResult(); }
-    else loadQuestion();
+ score+=questions[index].s[n];
+ index++;
+ if(index>=questions.length) showR();
+ else loadQ();
 }
 
-// 计算结果
-function getResultText(score){
-    if(score >= 24) return {
-        title:"💗 他很可能暗恋你！",
-        text:`${nameUser}，从种种迹象来看，TA 对你真的与别人不同。  
-TA 很在意你的一举一动，也会下意识关心你。  
-你在 TA 心里绝对不是普通朋友。`
-    };
-    if(score >= 18) return {
-        title:"🩷 TA 对你有好感！",
-        text:`${nameUser}，TA 对你有特别的关注，但还没到暗恋的程度。  
-继续互动，会有惊喜。`
-    };
-    return {
-        title:"🤍 暂时没有明显暗恋迹象",
-        text:`${nameUser}，目前 TA 对你的态度更像普通朋友。  
-不过感情是会变化的，你们还有很多可能。`
-    };
+function resText(s){
+ if(s>=24)
+   return{t:"TA 很大概率暗恋你 ❤️",c:`${nameUser}，各种迹象都说明 TA 对你真的特别！`};
+ if(s>=18)
+   return{t:"TA 对你有好感 🌸",c:`${nameUser}，TA 对你有感觉，但可能还没到暗恋程度。`};
+ return{t:"暂时没有暗恋迹象 😳",c:`${nameUser}，目前更像普通朋友关系。`};
 }
 
-// 显示结果
-function showResult(){
-    document.getElementById("page-test").classList.remove("active");
-    document.getElementById("page-result").classList.add("active");
-
-    let r = getResultText(score);
-    document.getElementById("result-box").innerHTML =
-        `<h2 style="color:#FF2442;">${r.title}</h2>
-         <p style="font-size:17px;line-height:1.7;">${r.text}</p >`;
+function showR(){
+ document.getElementById("page-test").classList.remove("active");
+ document.getElementById("page-result").classList.add("active");
+ let r=resText(score);
+ document.getElementById("result-box").innerHTML=
+  `<h2>${r.t}</h2><p>${r.c}</p >`;
 }
 
-
-// 生成海报
 function makePoster(){
-    document.getElementById("page-result").classList.remove("active");
-    document.getElementById("page-poster").classList.add("active");
-
-    let r = getResultText(score);
-
-    document.getElementById("poster").innerHTML = `
-        <div class="poster-title">💗 暗恋测试报告</div>
-        <div class="poster-box">
-            <p style="font-size:18px;font-weight:bold;">昵称：${nameUser}</p >
-            <p style="color:#FF2442;font-size:20px;margin:10px 0;">${r.title}</p >
-            <p style="line-height:1.6;">${r.text}</p >
-        </div>
-        <p style="margin-top:15px;color:#FF2442;">长按可保存分享</p >
-    `;
+ document.getElementById("page-result").classList.remove("active");
+ document.getElementById("page-poster").classList.add("active");
+ let r=resText(score);
+ document.getElementById("poster").innerHTML=`
+  <div style='background:#fff;padding:20px;border-radius:16px;
+              box-shadow:0 4px 10px rgba(0,0,0,.1);'>
+   <h2 style='color:#ff3b6a;'>暗恋测试报告</h2>
+   <p>昵称：${nameUser}</p >
+   <p style='font-size:22px;color:#ff3b6a;font-weight:bold;'>${r.t}</p >
+   <p>${r.c}</p >
+  </div>
+  <p style='text-align:center;color:#ff3b6a;margin-top:10px;'>长按保存海报</p >
+ `;
 }
 
-// 重来
 function restart(){
-    index = 0;
-    score = 0;
-    document.getElementById("page-poster").classList.remove("active");
-    document.getElementById("page-result").classList.remove("active");
-    document.getElementById("page-start").classList.add("active");
+ index=0;
+ score=0;
+ document.getElementById("page-poster").classList.remove("active");
+ document.getElementById("page-result").classList.remove("active");
+ document.getElementById("page-start").classList.add("active");
 }
 </script>
-
 </body>
 </html>
