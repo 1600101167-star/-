@@ -1,190 +1,132 @@
 <!DOCTYPE html>
 <html lang="zh">
-<head><style>
-  body {
-    font-family: "微软雅黑", sans-serif;
-    background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-  }
-
-  .container {
-    width: 90%;
-    max-width: 480px;
-    background: #ffffffcc;
-    backdrop-filter: blur(10px);
-    padding: 20px 24px;
-    margin-top: 40px;
-    border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-    animation: fadeIn 0.6s ease;
-  }
-
-  h2 {
-    font-size: 20px;
-    color: #333;
-    text-align: center;
-    line-height: 1.6;
-  }
-
-  .answer {
-    display: block;
-    background: #fff;
-    padding: 12px 18px;
-    margin: 10px 0;
-    border-radius: 12px;
-    font-size: 16px;
-    cursor: pointer;
-    border: 1px solid #eee;
-    transition: 0.25s;
-  }
-
-  .answer:hover {
-    background: #ffb7c5;
-    color: #fff;
-    transform: translateY(-2px);
-  }
-
-  button {
-    width: 100%;
-    background: #ff7fa1;
-    border: none;
-    color: white;
-    padding: 12px 16px;
-    font-size: 16px;
-    border-radius: 12px;
-    cursor: pointer;
-    margin-top: 16px;
-    transition: 0.3s;
-  }
-
-  button:hover {
-    background: #ff4f88;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0);   }
-  }
-</style>
-    <meta charset="UTF-8">
+<head>
+    <meta charset="UTF-8" />
     <title>暗恋测试</title>
+
+    <!-- 美化样式 -->
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
+            font-family: "微软雅黑", sans-serif;
+            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 600px;
-            margin: auto;
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 480px;
+            background: #ffffffcc;
+            backdrop-filter: blur(10px);
+            padding: 20px 24px;
+            margin-top: 40px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            animation: fadeIn 0.6s ease;
         }
 
         h2 {
+            font-size: 20px;
+            color: #333;
             text-align: center;
         }
 
-        .question {
-            font-size: 20px;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-
-        .btn {
-            width: 100%;
-            background: #4a90e2;
-            color: white;
-            border: none;
-            padding: 12px;
-            font-size: 18px;
-            border-radius: 8px;
-            margin-top: 12px;
+        .answer {
+            display: block;
+            background: #fff;
+            padding: 12px 18px;
+            margin: 10px 0;
+            border-radius: 12px;
+            font-size: 16px;
             cursor: pointer;
+            border: 1px solid #eee;
+            transition: 0.25s;
         }
 
-        .btn:hover {
-            background: #357abd;
+        .answer:hover {
+            background: #ffb7c5;
+            color: #fff;
+            transform: translateY(-2px);
         }
 
         #result {
-            font-size: 22px;
-            margin-top: 30px;
+            margin-top: 20px;
+            font-size: 18px;
             text-align: center;
-            font-weight: bold;
-            color: #e74c3c;
+            color: #444;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
+
 <body>
+    <div class="container">
+        <h2 id="question">加载中...</h2>
+        <div id="answers"></div>
+        <div id="result"></div>
+    </div>
 
-<div class="container">
-    <h2>暗恋测试：TA 是否喜欢你？</h2>
+    <script src="questions.js"></script>
 
-    <div id="questions"></div>
-    <div id="result"></div>
-</div>
+    <script>
+        let index = 0;
+        let score = 0;
 
-<script>
-    const questions = [
-        "1. TA 会主动找你聊天吗？",
-        "2. TA 看到你时会微笑吗？",
-        "3. TA 会主动帮你吗？",
-        "4. TA 对别人和对你态度不一样吗？",
-        "5. TA 愿意花时间陪你吗？",
-        "6. TA 会记住你的小细节吗？",
-        "7. TA 对你有耐心吗？",
-        "8. TA 会主动问你最近怎么样吗？",
-        "9. TA 愿意和你分享他的事情吗？",
-        "10. TA 见到你会紧张或害羞吗？"
-    ];
+        function showQuestion() {
+            if (index >= questions.length) {
+                showResult();
+                return;
+            }
 
-    let score = 0;
-    let index = 0;
+            const q = questions[index];
+            document.getElementById("question").innerText = q.question;
 
-    function showQuestion() {
-        if (index < questions.length) {
-            document.getElementById("questions").innerHTML = `
-                <div class="question">${questions[index]}</div>
-                <button class="btn" onclick="answer(1)">是的</button>
-                <button class="btn" onclick="answer(0)">不是</button>
-            `;
-        } else {
-            showResult();
+            const answersDiv = document.getElementById("answers");
+            answersDiv.innerHTML = "";
+
+            q.answers.forEach((ans, i) => {
+                let btn = document.createElement("div");
+                btn.className = "answer";
+                btn.innerText = ans;
+                btn.onclick = () => answer(i + 1);
+                answersDiv.appendChild(btn);
+            });
         }
-    }
 
-    function answer(value) {
-        score += value;
-        index++;
+        function answer(value) {
+            score += value;
+            index++;
+            showQuestion();
+        }
+
+        function showResult() {
+            let resultText = "";
+
+            if (score <= 15) {
+                resultText = "你可能对TA兴趣一般，但关系轻松自然。";
+            } else if (score <= 25) {
+                resultText = "你对TA有一点好感，但还在隐藏自己。";
+            } else if (score <= 35) {
+                resultText = "你对TA明显动心了，只是有点害怕表露。";
+            } else {
+                resultText = "你非常喜欢TA，已经到暗恋深度级别啦！";
+            }
+
+            document.getElementById("result").innerText = resultText;
+            document.getElementById("question").innerText = "测试完成";
+            document.getElementById("answers").innerHTML = "";
+        }
+
         showQuestion();
-    }
-
-    function showResult() {
-        let text = "";
-        if (score >= 8) {
-            text = "❤️ 他非常喜欢你！暗恋概率极高！";
-        } else if (score >= 5) {
-            text = "💛 他对你有好感！但还没有完全确定。";
-        } else {
-            text = "💔 他可能暂时没有喜欢你。";
-        }
-        document.getElementById("questions").innerHTML = "";
-        document.getElementById("result").innerText = text;
-    }
-
-    showQuestion();
-</script>
+    </script>
 
 </body>
 </html>
-
