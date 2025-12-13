@@ -14,36 +14,37 @@ body{
  color:#333;
 }
 
-.page{display:none;padding:20px;}
+/* 页面基础 */
+.page{
+ display:none;
+ padding:20px;
+ min-height:100vh;
+ box-sizing:border-box;
+}
 .active{display:block;}
 
 h1{
  text-align:center;
  color:#ff3b6a;
- margin-top:30px;
+ margin:20px 0 10px;
  font-size:28px;
  font-weight:700;
 }
 
+/* 卡片 */
 .card{
  background:#fff;
  padding:30px 22px;
  border-radius:18px;
  box-shadow:0 8px 18px rgba(0,0,0,.13);
- margin-top:64px;
- animation:float 2.8s ease-in-out infinite;
+ width:100%;
+ max-width:420px;
 }
 
-/* 呼吸浮起 */
-@keyframes float{
- 0%{transform:translateY(0);}
- 50%{transform:translateY(-6px);}
- 100%{transform:translateY(0);}
-}
-
+/* 按钮 */
 button{
  width:90%;
- margin:22px auto;
+ margin:18px auto;
  padding:14px;
  border:none;
  border-radius:14px;
@@ -53,6 +54,7 @@ button{
  display:block;
 }
 
+/* 选项 */
 .option{
  padding:14px;
  background:#ffd9e4;
@@ -61,12 +63,13 @@ button{
  font-size:17px;
 }
 
+/* 进度条 */
 .progress{
  width:90%;
  height:12px;
  background:#fff;
  border-radius:10px;
- margin:20px auto 12px;
+ margin:20px auto;
  overflow:hidden;
 }
 .progress-inner{
@@ -74,6 +77,28 @@ button{
  width:0%;
  background:#ff3b6a;
  transition:.3s;
+}
+
+/* ===================== */
+/* ⭐ 结果页关键布局 ⭐ */
+/* ===================== */
+#page-result{
+ display:flex;
+ flex-direction:column;
+ justify-content:center;   /* 垂直正中 */
+ align-items:center;       /* 水平正中 */
+}
+
+/* 结果卡片微下沉（视觉中轴） */
+#result-box{
+ transform:translateY(40px);
+}
+
+/* 百分比动画 */
+@keyframes float{
+ 0%{transform:translateY(0);}
+ 50%{transform:translateY(-6px);}
+ 100%{transform:translateY(0);}
 }
 </style>
 </head>
@@ -91,19 +116,17 @@ button{
  </div>
 </div>
 
-<!-- 测试 -->
+<!-- 测试页 -->
 <div id="page-test" class="page">
  <div class="progress">
   <div class="progress-inner" id="bar"></div>
  </div>
- <div id="question-box" class="card" style="animation:none;"></div>
+ <div id="question-box" class="card"></div>
 </div>
 
-<!-- 结果 -->
+<!-- 结果页（重点） -->
 <div id="page-result" class="page">
- <h1>测试结果</h1>
  <div id="result-box" class="card"></div>
- <button onclick="makePoster()">生成海报</button>
  <button onclick="restart()">再测一次</button>
 </div>
 
@@ -155,7 +178,7 @@ function getPercent(){
  return p;
 }
 
-/* 百分比动画 */
+/* 百分比跳动动画 */
 function animatePercent(el, target){
  let cur = 0;
  let timer = setInterval(()=>{
@@ -176,25 +199,23 @@ function showResult(){
     flex-direction:column;
     align-items:center;
     justify-content:center;
+    min-height:240px;
     text-align:center;
-    min-height:220px;
+    animation:float 3s ease-in-out infinite;
   ">
-   <p style="font-size:15px;color:#999;">TA 对你暗恋程度</p >
+    <p style="font-size:15px;color:#999;">TA 对你暗恋程度</p >
 
-   <div id="percent"
-    style="
-     font-size:72px;
-     font-weight:900;
-     color:#ff3b6a;
-     line-height:1;
-     margin:18px 0;
-    ">
-    0%
-   </div>
+    <div id="percent" style="
+      font-size:76px;
+      font-weight:900;
+      color:#ff3b6a;
+      margin:18px 0;
+      line-height:1;
+    ">0%</div>
 
-   <p style="font-size:16px;color:#666;">
-    综合互动频率与情绪反应计算
-   </p >
+    <p style="font-size:16px;color:#666;">
+      综合互动频率与行为细节计算
+    </p >
   </div>
  `;
 
@@ -203,7 +224,6 @@ function showResult(){
  },300);
 }
 
-function makePoster(){}
 function restart(){
  index=0; score=0;
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
