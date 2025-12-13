@@ -13,15 +13,8 @@ body{
  min-height:100vh;
  color:#333;
 }
-
-@keyframes fadeUp{
- from{opacity:0;transform:translateY(20px);}
- to{opacity:1;transform:translateY(0);}
-}
-
 .page{display:none;padding:20px;}
-.active{display:block;animation:fadeUp .5s ease;}
-
+.active{display:block;}
 h1{
  text-align:center;
  color:#ff3b6a;
@@ -29,7 +22,13 @@ h1{
  font-size:28px;
  font-weight:700;
 }
-
+.card{
+ background:#fff;
+ padding:22px;
+ border-radius:18px;
+ box-shadow:0 6px 15px rgba(0,0,0,.12);
+ margin-top:30px;
+}
 button{
  width:90%;
  margin:20px auto;
@@ -40,17 +39,7 @@ button{
  color:#fff;
  font-size:18px;
  display:block;
- box-shadow:0 4px 10px rgba(255,59,106,.3);
 }
-
-.card{
- background:#fff;
- padding:22px;
- border-radius:18px;
- box-shadow:0 6px 15px rgba(0,0,0,.12);
- margin-top:30px;
-}
-
 .option{
  padding:14px;
  background:#ffd9e4;
@@ -58,8 +47,6 @@ button{
  margin-top:12px;
  font-size:17px;
 }
-.option:active{transform:scale(.96);}
-
 .progress{
  width:90%;
  height:12px;
@@ -74,7 +61,6 @@ button{
  background:#ff3b6a;
  transition:.3s;
 }
-
 #poster{
  background:#ffe3ed;
  padding:20px;
@@ -90,7 +76,7 @@ button{
 <div id="page-start" class="page active">
  <h1>暗恋测试</h1>
  <div class="card">
-  <p style="text-align:center;color:#666;">小红书风 · 暗恋概率测算</p >
+  <p style="text-align:center;color:#666;">暗恋概率测算</p >
   <input id="username" placeholder="输入你的名字"
    style="width:90%;padding:12px;border-radius:10px;border:1px solid #ddd;display:block;margin:15px auto;">
   <button onclick="startTest()">开始测试</button>
@@ -122,14 +108,14 @@ button{
 const questions=[
  {q:"TA 看你时会刻意避开又忍不住看吗？",s:[3,2,1]},
  {q:"TA 会主动找你聊天吗？",s:[3,2,1]},
- {q:"你发动态时，TA 基本都会出现吗？",s:[3,2,1]},
+ {q:"你发动态时，TA 几乎都会出现吗？",s:[3,2,1]},
  {q:"TA 会注意你的小变化吗？",s:[3,2,1]},
  {q:"和你单独相处时，TA 会紧张吗？",s:[3,2,1]},
  {q:"TA 记得你的喜好吗？",s:[3,2,1]},
- {q:"你不开心时，TA 会关心吗？",s:[3,2,1]},
+ {q:"你低落时，TA 会关心吗？",s:[3,2,1]},
  {q:"TA 会偷偷观察你吗？",s:[3,2,1]},
  {q:"TA 会向别人提起你吗？",s:[3,2,1]},
- {q:"你直觉觉得 TA 喜欢你吗？",s:[3,2,1]}
+ {q:"你的直觉觉得 TA 喜欢你吗？",s:[3,2,1]}
 ];
 
 let index=0,score=0,nameUser="";
@@ -159,52 +145,52 @@ function choose(n){
  index>=questions.length ? showResult() : loadQ();
 }
 
-function getResult(){
- let percent=Math.round(score/30*100);
- if(percent>95) percent=95;
- if(percent<10) percent=10;
+function getPercent(){
+ let p=Math.round(score/30*100);
+ if(p>95) p=95;
+ if(p<10) p=10;
+ return p;
+}
 
- let text="";
- if(percent>=80) text="几乎可以确定，TA 对你是藏不住的在意。";
- else if(percent>=60) text="暗恋信号明显，关系正在升温。";
- else if(percent>=40) text="有好感，但还在犹豫和观察。";
- else text="目前暗恋迹象较弱，更像普通关系。";
-
- return {percent,text};
+function getExplain(p){
+ if(p>=80) return "暗恋信号非常密集，情绪和行为已经多次暴露。";
+ if(p>=60) return "存在明显好感，正在试探与靠近阶段。";
+ if(p>=40) return "有一定情绪波动，但仍在观察中。";
+ return "目前更多像普通关系，暗恋迹象较少。";
 }
 
 function showResult(){
+ let p=getPercent();
  document.getElementById("page-test").classList.remove("active");
  document.getElementById("page-result").classList.add("active");
- let r=getResult();
 
  document.getElementById("result-box").innerHTML=`
-  <p style="font-size:46px;font-weight:900;color:#ff3b6a;">
-   ${r.percent}%
+  <p style="font-size:52px;font-weight:900;color:#ff3b6a;">
+   ${p}%
   </p >
-  <p style="color:#999;margin-bottom:14px;">
+  <p style="color:#999;margin-bottom:12px;">
    TA 暗恋你的概率
   </p >
   <p style="font-size:17px;color:#555;line-height:1.6;">
-   ${nameUser}，${r.text}
+   ${nameUser}，${getExplain(p)}
   </p >
  `;
 }
 
 function makePoster(){
- let r=getResult();
+ let p=getPercent();
  document.getElementById("page-result").classList.remove("active");
  document.getElementById("page-poster").classList.add("active");
 
  document.getElementById("poster").innerHTML=`
  <div style="background:#fff;padding:20px;border-radius:18px;">
-  <h2 style="color:#ff3b6a;">暗恋测试报告</h2>
+  <h2 style="color:#ff3b6a;">暗恋概率报告</h2>
   <p>昵称：<b>${nameUser}</b></p >
-  <p style="font-size:50px;font-weight:900;color:#ff3b6a;">
-   ${r.percent}%
+  <p style="font-size:56px;font-weight:900;color:#ff3b6a;">
+   ${p}%
   </p >
-  <p style="color:#999;">暗恋你的概率</p >
-  <p style="margin-top:10px;">${r.text}</p >
+  <p style="color:#999;">TA 暗恋你的概率</p >
+  <p style="margin-top:10px;">${getExplain(p)}</p >
  </div>
  <p style="text-align:center;color:#ff3b6a;margin-top:12px;">
   · 长按保存 ·
