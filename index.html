@@ -27,10 +27,10 @@ h1{
 
 .card{
  background:#fff;
- padding:26px 22px;
+ padding:28px 22px;
  border-radius:18px;
- box-shadow:0 6px 15px rgba(0,0,0,.12);
- margin-top:46px;   /* 关键：整体下移 */
+ box-shadow:0 8px 18px rgba(0,0,0,.13);
+ margin-top:64px;   /* 👈 再往下沉一档 */
 }
 
 button{
@@ -58,7 +58,7 @@ button{
  height:12px;
  background:#fff;
  border-radius:10px;
- margin:20px auto 10px;
+ margin:20px auto 12px;
  overflow:hidden;
 }
 .progress-inner{
@@ -87,7 +87,7 @@ button{
    测一测 TA 对你的暗恋程度
   </p >
   <input id="username" placeholder="输入你的名字"
-   style="width:90%;padding:12px;border-radius:10px;border:1px solid #ddd;display:block;margin:18px auto;">
+   style="width:90%;padding:12px;border-radius:10px;border:1px solid #ddd;display:block;margin:20px auto;">
   <button onclick="startTest()">开始测试</button>
  </div>
 </div>
@@ -104,7 +104,7 @@ button{
 <div id="page-result" class="page">
  <h1>测试结果</h1>
 
- <!-- 结果卡片整体下沉 -->
+ <!-- 👇 结果卡片整体下沉 -->
  <div id="result-box" class="card"></div>
 
  <button onclick="makePoster()">生成海报</button>
@@ -144,7 +144,7 @@ function startTest(){
 function loadQ(){
  let q=questions[index];
  document.getElementById("question-box").innerHTML=`
-  <h2 style="color:#ff3b6a;line-height:1.5;margin-bottom:20px;">
+  <h2 style="color:#ff3b6a;line-height:1.5;margin-bottom:22px;">
    ${q.q}
   </h2>
   <div class="option" onclick="choose(0)">非常明显</div>
@@ -174,16 +174,16 @@ function showResult(){
  document.getElementById("page-result").classList.add("active");
 
  document.getElementById("result-box").innerHTML = `
-  <div style="margin-top:6px;text-align:center;">
+  <div style="margin-top:18px;text-align:center;">
    <p style="font-size:15px;color:#999;letter-spacing:1px;">
     TA 对你暗恋程度
    </p >
 
    <p style="
-    font-size:64px;
+    font-size:68px;
     font-weight:900;
     color:#ff3b6a;
-    margin:10px 0 18px;
+    margin:14px 0 22px;
    ">
     ${p}%
    </p >
@@ -193,7 +193,7 @@ function showResult(){
     color:#666;
     line-height:1.7;
    ">
-    该结果基于互动频率、情绪反应与行为细节综合计算
+    综合互动频率、情绪反应与行为细节计算
    </p >
   </div>
  `;
@@ -205,11 +205,11 @@ function makePoster(){
  document.getElementById("page-poster").classList.add("active");
 
  document.getElementById("poster").innerHTML = `
- <div style="background:#fff;padding:24px;border-radius:18px;text-align:center;">
+ <div style="background:#fff;padding:26px;border-radius:18px;text-align:center;">
   <h2 style="color:#ff3b6a;">暗恋程度测试</h2>
   <p style="color:#999;margin:6px 0;">${nameUser}</p >
 
-  <p style="font-size:66px;font-weight:900;color:#ff3b6a;margin:12px 0;">
+  <p style="font-size:70px;font-weight:900;color:#ff3b6a;margin:16px 0;">
    ${p}%
   </p >
 
