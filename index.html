@@ -13,8 +13,10 @@ body{
  min-height:100vh;
  color:#333;
 }
+
 .page{display:none;padding:20px;}
 .active{display:block;}
+
 h1{
  text-align:center;
  color:#ff3b6a;
@@ -22,6 +24,7 @@ h1{
  font-size:28px;
  font-weight:700;
 }
+
 .card{
  background:#fff;
  padding:22px;
@@ -29,6 +32,7 @@ h1{
  box-shadow:0 6px 15px rgba(0,0,0,.12);
  margin-top:30px;
 }
+
 button{
  width:90%;
  margin:20px auto;
@@ -40,6 +44,7 @@ button{
  font-size:18px;
  display:block;
 }
+
 .option{
  padding:14px;
  background:#ffd9e4;
@@ -47,6 +52,7 @@ button{
  margin-top:12px;
  font-size:17px;
 }
+
 .progress{
  width:90%;
  height:12px;
@@ -61,6 +67,7 @@ button{
  background:#ff3b6a;
  transition:.3s;
 }
+
 #poster{
  background:#ffe3ed;
  padding:20px;
@@ -76,7 +83,9 @@ button{
 <div id="page-start" class="page active">
  <h1>暗恋测试</h1>
  <div class="card">
-  <p style="text-align:center;color:#666;">测一测 TA 对你的暗恋程度</p >
+  <p style="text-align:center;color:#666;">
+   测一测 TA 对你的暗恋程度
+  </p >
   <input id="username" placeholder="输入你的名字"
    style="width:90%;padding:12px;border-radius:10px;border:1px solid #ddd;display:block;margin:15px auto;">
   <button onclick="startTest()">开始测试</button>
@@ -85,7 +94,9 @@ button{
 
 <!-- 测试 -->
 <div id="page-test" class="page">
- <div class="progress"><div class="progress-inner" id="bar"></div></div>
+ <div class="progress">
+  <div class="progress-inner" id="bar"></div>
+ </div>
  <div id="question-box" class="card"></div>
 </div>
 
@@ -130,66 +141,74 @@ function startTest(){
 function loadQ(){
  let q=questions[index];
  document.getElementById("question-box").innerHTML=`
-  <h2 style="color:#ff3b6a;line-height:1.4;">${q.q}</h2>
+  <h2 style="color:#ff3b6a;line-height:1.4;">
+   ${q.q}
+  </h2>
   <div class="option" onclick="choose(0)">非常明显</div>
   <div class="option" onclick="choose(1)">有一点</div>
   <div class="option" onclick="choose(2)">看不出来</div>
  `;
- document.getElementById("bar").style.width=
-  (index/questions.length)*100+"%";
+ document.getElementById("bar").style.width =
+  (index/questions.length)*100 + "%";
 }
 
 function choose(n){
- score+=questions[index].s[n];
+ score += questions[index].s[n];
  index++;
- index>=questions.length ? showResult() : loadQ();
+ index >= questions.length ? showResult() : loadQ();
 }
 
 function getPercent(){
- let p=Math.round(score/30*100);
- if(p>95) p=95;
- if(p<10) p=10;
+ let p = Math.round(score / 30 * 100);
+ if(p > 95) p = 95;
+ if(p < 10) p = 10;
  return p;
 }
 
-function getExplain(p){
- if(p>=80) return "暗恋信号非常密集，很多细节已经说明问题。";
- if(p>=60) return "存在明显好感，正在试探和靠近阶段。";
- if(p>=40) return "有一定情绪波动，但仍在观察中。";
- return "目前暗恋迹象较少，更像普通关系。";
-}
-
 function showResult(){
- let p=getPercent();
+ let p = getPercent();
  document.getElementById("page-test").classList.remove("active");
  document.getElementById("page-result").classList.add("active");
 
- document.getElementById("result-box").innerHTML=`
-  <p style="font-size:16px;color:#999;">TA 对你暗恋程度</p >
-  <p style="font-size:56px;font-weight:900;color:#ff3b6a;margin:6px 0;">
+ document.getElementById("result-box").innerHTML = `
+  <p style="font-size:16px;color:#999;">
+   TA 对你暗恋程度
+  </p >
+
+  <p style="
+   font-size:58px;
+   font-weight:900;
+   color:#ff3b6a;
+   margin:6px 0;
+  ">
    ${p}%
   </p >
+
   <p style="font-size:17px;color:#555;line-height:1.6;">
-   ${nameUser}，${getExplain(p)}
+   这是基于行为细节计算出的暗恋概率
   </p >
  `;
 }
 
 function makePoster(){
- let p=getPercent();
+ let p = getPercent();
  document.getElementById("page-result").classList.remove("active");
  document.getElementById("page-poster").classList.add("active");
 
- document.getElementById("poster").innerHTML=`
+ document.getElementById("poster").innerHTML = `
  <div style="background:#fff;padding:20px;border-radius:18px;">
   <h2 style="color:#ff3b6a;">暗恋程度测试</h2>
   <p>昵称：<b>${nameUser}</b></p >
-  <p style="font-size:14px;color:#999;">TA 对你暗恋程度</p >
-  <p style="font-size:58px;font-weight:900;color:#ff3b6a;">
+
+  <p style="font-size:14px;color:#999;">
+   TA 对你暗恋程度
+  </p >
+
+  <p style="font-size:60px;font-weight:900;color:#ff3b6a;">
    ${p}%
   </p >
-  <p style="margin-top:10px;">${getExplain(p)}</p >
  </div>
+
  <p style="text-align:center;color:#ff3b6a;margin-top:12px;">
   · 长按保存 ·
  </p >
@@ -197,8 +216,9 @@ function makePoster(){
 }
 
 function restart(){
- index=0;score=0;
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ index = 0;
+ score = 0;
+ document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
  document.getElementById("page-start").classList.add("active");
 }
 </script>
