@@ -31,6 +31,7 @@ h1{
  border-radius:18px;
  box-shadow:0 8px 18px rgba(0,0,0,.13);
  margin-top:64px;
+ text-align:center;
 }
 
 button{
@@ -73,43 +74,47 @@ button{
 
 <body>
 
-<!-- 支付页 -->
+<!-- 支付页（二维码默认显示） -->
 <div id="page-pay" class="page active">
- <h1>暗恋测试</h1>
- <div class="card">
-  <p style="text-align:center;color:#666;">支付 1 元开始测试</p >
-  <button onclick="showQRCode()">支付 1 元</button>
+  <h1>暗恋测试</h1>
 
-  <div id="qrcode" style="display:none;text-align:center;margin-top:20px;">
-    < img src="pay.jpg" style="width:200px;">
-    <p style="color:#666;margin-top:10px;">支付完成后点击下方按钮</p >
+  <div class="card">
+    <p style="color:#666;">支付 1 元开始测试</p >
+
+    <!-- 二维码 -->
+    < img src="pay.jpg" style="width:200px;margin:20px auto;display:block;">
+
+    <p style="color:#666;font-size:14px;line-height:1.6;">
+      长按识别二维码完成支付<br>
+      支付完成后点击下方按钮
+    </p >
+
     <button onclick="startTest()">我已支付</button>
   </div>
- </div>
 </div>
 
 <!-- 测试页 -->
 <div id="page-test" class="page">
- <div class="progress">
-  <div class="progress-inner" id="bar"></div>
- </div>
- <div id="question-box" class="card"></div>
+  <div class="progress">
+    <div class="progress-inner" id="bar"></div>
+  </div>
+  <div id="question-box" class="card"></div>
 </div>
 
 <!-- 结果页 -->
 <div id="page-result" class="page">
- <h1>测试结果</h1>
- <div id="result-box" class="card"></div>
- <button onclick="restart()">再测一次</button>
+  <h1>测试结果</h1>
+  <div id="result-box" class="card"></div>
+  <button onclick="restart()">再测一次</button>
 </div>
 
 <script>
 const questions=[
  "TA 看你时会刻意避开又忍不住看吗？",
  "TA 会主动找你聊天吗？",
- "你发动态时 TA 会点赞或评论吗？",
+ "你发动态时 TA 会出现吗？",
  "TA 会注意你的小变化吗？",
- "单独相处时 TA 会紧张吗？",
+ "和你单独相处时 TA 会紧张吗？",
  "TA 记得你的喜好吗？",
  "你低落时 TA 会关心吗？",
  "TA 会偷偷观察你吗？",
@@ -120,21 +125,15 @@ const questions=[
 let index=0;
 let score=0;
 
-function showQRCode(){
- document.getElementById("qrcode").style.display="block";
-}
-
 function startTest(){
  document.getElementById("page-pay").style.display="none";
- const testPage=document.getElementById("page-test");
- testPage.style.display="block";
- testPage.classList.add("active");
+ document.getElementById("page-test").style.display="block";
  loadQuestion();
 }
 
 function loadQuestion(){
  document.getElementById("question-box").innerHTML=`
-  <h2 style="color:#ff3b6a;">${questions[index]}</h2>
+  <h2 style="color:#ff3b6a;margin-bottom:20px;">${questions[index]}</h2>
   <div class="option" onclick="choose(3)">非常明显</div>
   <div class="option" onclick="choose(2)">有一点</div>
   <div class="option" onclick="choose(1)">看不出来</div>
@@ -152,12 +151,14 @@ function showResult(){
  document.getElementById("page-test").style.display="none";
  document.getElementById("page-result").style.display="block";
 
- let percent=Math.min(95,Math.max(10,Math.round(score/30*100)));
+ let percent=Math.round(score/30*100);
+ if(percent>95) percent=95;
+ if(percent<10) percent=10;
 
  document.getElementById("result-box").innerHTML=`
-  <p style="text-align:center;color:#999;">TA 对你暗恋程度</p >
-  <p style="font-size:72px;font-weight:900;color:#ff3b6a;text-align:center;">${percent}%</p >
-  <p style="text-align:center;color:#666;">根据互动与情绪反应综合计算</p >
+  <p style="color:#999;">TA 对你暗恋程度</p >
+  <p style="font-size:72px;font-weight:900;color:#ff3b6a;">${percent}%</p >
+  <p style="color:#666;">综合互动与情绪反应计算</p >
  `;
 }
 
